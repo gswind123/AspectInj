@@ -1,14 +1,28 @@
 package com.windning.pointcut;
 
+import java.util.Map;
+
 /**
  * The aspect-join-point-injecting interface
  * NOTE: {#before}/{#after} should not be called by users
  */
-public class AspectPointCut {
-    private static PointCutProcessor sProcessor = null;
+public class AspectInjector {
+    private static Map<String, PointCut> sPointCutMap;
 
-    public static void weave(PointCutProcessor processor) {
-        sProcessor = processor;
+    /**
+     * Register point cuts.All user-defined point cuts will not
+     * work util this method is invoked.
+     */
+    public static void weave(PointCutRegistery registery) {
+        sPointCutMap = registery.register();
+    }
+
+    private static PointCut selectPointCut(String position) {
+        if(sPointCutMap != null) {
+            return sPointCutMap.get(position);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -17,9 +31,6 @@ public class AspectPointCut {
      *      The top level instance is the instance of the class annotated.
      */
     public static boolean before(boolean isStatic, Object... args) {
-        if(sProcessor == null) {
-            return true;
-        }
         int minArgNum = 2;
         if(isStatic) {
             minArgNum = 1;
@@ -44,12 +55,10 @@ public class AspectPointCut {
         for(int i=methodArgStart,j=0;i<args.length-1;i++,j++) {
             methodArgs[j] = args[i];
         }
-        return sProcessor.onBefore(position, self, methodArgs);
+        PointCut cut = selectPointCut(position);
+        return cut == null ? true : cut.onBefore(self, methodArgs);
     }
     public static void after(boolean isStatic, Object... args) {
-        if(sProcessor == null) {
-            return ;
-        }
         int minArgNum = 2;
         if(isStatic) {
             minArgNum = 1;
@@ -74,6 +83,9 @@ public class AspectPointCut {
         for(int i=methodArgStart,j=0;i<args.length-1;i++,j++) {
             methodArgs[j] = args[i];
         }
-        sProcessor.onAfter(position, self, methodArgs);
+        PointCut cut = selectPointCut(position);
+        if(cut != null) {
+            cut.onAfter(self, methodArgs);
+        }
     }
 }

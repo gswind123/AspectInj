@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.windning.annotation.JoinPoints;
 import com.windning.aspectinj.R;
-import com.windning.pointcut.AspectPointCut;
+import com.windning.pointcut.AspectInjector;
 
 import demo.windning.view.pointcut.DemoPointCut;
 
@@ -20,7 +20,7 @@ public class MainActivity extends FragmentActivity {
     private View mToastBtn, mIgnoreBtn, mInnerToastBtn;
     @Override
     public void onCreate(Bundle savedInstance) {
-        AspectPointCut.weave(new DemoPointCut());
+        AspectInjector.weave(new DemoPointCut());
         super.onCreate(savedInstance);
         setContentView(R.layout.main_activity_layout);
         mToastBtn = findViewById(R.id.toast_btn);

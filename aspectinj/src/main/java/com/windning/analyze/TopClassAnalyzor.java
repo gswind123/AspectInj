@@ -94,12 +94,6 @@ public class TopClassAnalyzor extends TreeTranslator {
             InsertAfterVisitor afterVisitor = new InsertAfterVisitor(mTreeMaker, mNameTable,
                     method, invokeAfter);
             method.accept(afterVisitor);
-            if(afterVisitor.getInsertCount() == 0) {
-                //if there is no "return", add after at the last statement
-                stateList.append(mTreeMaker.Exec(invokeAfter));
-            }
-
-            funcBody.stats = stateList.toList();
 
         }catch (Exception e){
 
@@ -114,7 +108,7 @@ public class TopClassAnalyzor extends TreeTranslator {
     private JCMethodInvocation generateBeforeInvocation(JCMethodDecl method) {
         //First,access before method
         JCTree.JCFieldAccess accessBefore = AnalyzeUtil.makeAccess(mTreeMaker, mNameTable,
-                "com", "windning", "pointcut", "AspectPointCut", "before");
+                "com", "windning", "pointcut", "AspectInjector", "before");
 
         //Then,add arguments
         boolean isStatic = AnalyzeUtil.isContextStatic(mCxtStack);
@@ -139,7 +133,7 @@ public class TopClassAnalyzor extends TreeTranslator {
     private JCMethodInvocation generateAfterInvocation(JCMethodDecl method) {
         //First,access after method
         JCTree.JCFieldAccess accessAfter = AnalyzeUtil.makeAccess(mTreeMaker, mNameTable,
-                "com", "windning", "pointcut", "AspectPointCut", "after");
+                "com", "windning", "pointcut", "AspectInjector", "after");
 
         //Then,add arguments
         boolean isStatic = AnalyzeUtil.isContextStatic(mCxtStack);

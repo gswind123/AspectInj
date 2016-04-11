@@ -4,7 +4,9 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.List;
+import com.sun.tools.javac.util.ListBuffer;
 import com.sun.tools.javac.util.Names;
+import com.windning.analyze.util.AnalyzeUtil;
 
 /**
  * This visitor is used to insert "after" method before each "return" node
@@ -41,6 +43,18 @@ public class InsertAfterVisitor extends TreeTranslator{
         mLevelIndex++;
         super.visitMethodDef(method);
         mLevelIndex--;
+        if(mLevelIndex == 0) { //target traversed
+            /**
+             * When return type is VOID, there should be an "after"
+             * at the end of the method.
+             */
+            if(AnalyzeUtil.makeEmptyReturn(mTreeMaker, mNameTable, method) == null) {
+                ListBuffer<JCTree.JCStatement> stats = new ListBuffer<JCTree.JCStatement>();
+                stats.addAll(method.getBody().stats);
+                stats.add(mTreeMaker.Exec(mInvocation));
+                method.getBody().stats = stats.toList();
+            }
+        }
     }
 
     @Override
