@@ -11,7 +11,7 @@ import com.windning.analyze.util.AnalyzeUtil;
 /**
  * This visitor is used to insert "after" method before each "return" node
  * in the current method block.The "return" node of inner classes and methods
- * woundn't get effected
+ * woundn't get affected
  */
 public class InsertAfterVisitor extends TreeTranslator{
     private int mLevelIndex = -1;

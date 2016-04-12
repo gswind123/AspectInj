@@ -1,28 +1,41 @@
 package com.windning.pointcut;
 
-import java.util.Map;
+import java.util.Set;
 
 /**
  * The aspect-join-point-injecting interface
- * NOTE: {#before}/{#after} should not be called by users
+ * NOTE: <code>before</code>/<code>after</code> should not be called by users
  */
 public class AspectInjector {
-    private static Map<String, PointCut> sPointCutMap;
+    private static PointCutEntry mPointCutEntry = new PointCutEntry();
 
     /**
      * Register point cuts.All user-defined point cuts will not
      * work util this method is invoked.
      */
     public static void weave(PointCutRegistery registery) {
-        sPointCutMap = registery.register();
+        if(registery != null) {
+            registery.register(mPointCutEntry);
+        }
     }
 
-    private static PointCut selectPointCut(String position) {
-        if(sPointCutMap != null) {
-            return sPointCutMap.get(position);
-        } else {
-            return null;
-        }
+    private static boolean mEnabled = true;
+
+    /**
+     * Set if enable the injected point cuts
+     * If disabled, the point cuts woundn't be invoked.
+     * @param isEnable
+     */
+    public static void enablePointCuts(boolean isEnable) {
+        mEnabled = isEnable;
+    }
+
+    public static boolean isPointCutsEnable() {
+        return mEnabled;
+    }
+
+    private static Set<PointCut> selectPointCuts(String position) {
+        return mPointCutEntry.get(position);
     }
 
     /**
@@ -31,6 +44,10 @@ public class AspectInjector {
      *      The top level instance is the instance of the class annotated.
      */
     public static boolean before(boolean isStatic, Object... args) {
+        if(!mEnabled) {
+            return true;
+        }
+
         int minArgNum = 2;
         if(isStatic) {
             minArgNum = 1;
@@ -55,10 +72,23 @@ public class AspectInjector {
         for(int i=methodArgStart,j=0;i<args.length-1;i++,j++) {
             methodArgs[j] = args[i];
         }
-        PointCut cut = selectPointCut(position);
-        return cut == null ? true : cut.onBefore(self, methodArgs);
+        Set<PointCut> cuts = selectPointCuts(position);
+        if(cuts == null) {
+            return true;
+        } else {
+            boolean res = true;
+            for(PointCut cut : cuts) {
+                res &= cut.onBefore(self, methodArgs);
+            }
+            return res;
+        }
     }
+
     public static void after(boolean isStatic, Object... args) {
+        if(!mEnabled) {
+            return ;
+        }
+
         int minArgNum = 2;
         if(isStatic) {
             minArgNum = 1;
@@ -83,9 +113,11 @@ public class AspectInjector {
         for(int i=methodArgStart,j=0;i<args.length-1;i++,j++) {
             methodArgs[j] = args[i];
         }
-        PointCut cut = selectPointCut(position);
-        if(cut != null) {
-            cut.onAfter(self, methodArgs);
+        Set<PointCut> cuts = selectPointCuts(position);
+        if(cuts != null) {
+            for(PointCut cut : cuts) {
+                cut.onAfter(self, methodArgs);
+            }
         }
     }
 }

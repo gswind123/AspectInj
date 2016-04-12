@@ -4,6 +4,15 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    signingConfigs {
+        release{
+            storeFile file("../keys/windning.keystore")
+            storePassword "aspectinj"
+            keyAlias "windning"
+            keyPassword "aspectinj"
+        }
+    }
+
     defaultConfig {
         applicationId "windning.com.aspectinj"
         minSdkVersion 8
@@ -11,10 +20,12 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
