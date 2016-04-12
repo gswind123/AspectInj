@@ -16,4 +16,4 @@
 #   public *;
 #}
 -ignorewarnings
--keep public class com.windning.**{*;}
+-keep public class org.windning.**{*;}

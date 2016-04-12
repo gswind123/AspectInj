@@ -1,4 +1,4 @@
-package com.windning.pointcut;
+package org.windning.pointcut;
 
 import java.util.Set;
 
@@ -13,7 +13,7 @@ public class AspectInjector {
      * Register point cuts.All user-defined point cuts will not
      * work util this method is invoked.
      */
-    public static void weave(PointCutRegistery registery) {
+    public static void weave(org.windning.pointcut.PointCutRegistery registery) {
         if(registery != null) {
             registery.register(mPointCutEntry);
         }
@@ -34,7 +34,7 @@ public class AspectInjector {
         return mEnabled;
     }
 
-    private static Set<PointCut> selectPointCuts(String position) {
+    private static Set<org.windning.pointcut.PointCut> selectPointCuts(String position) {
         return mPointCutEntry.get(position);
     }
 
@@ -72,12 +72,12 @@ public class AspectInjector {
         for(int i=methodArgStart,j=0;i<args.length-1;i++,j++) {
             methodArgs[j] = args[i];
         }
-        Set<PointCut> cuts = selectPointCuts(position);
+        Set<org.windning.pointcut.PointCut> cuts = selectPointCuts(position);
         if(cuts == null) {
             return true;
         } else {
             boolean res = true;
-            for(PointCut cut : cuts) {
+            for(org.windning.pointcut.PointCut cut : cuts) {
                 res &= cut.onBefore(self, methodArgs);
             }
             return res;
@@ -113,9 +113,9 @@ public class AspectInjector {
         for(int i=methodArgStart,j=0;i<args.length-1;i++,j++) {
             methodArgs[j] = args[i];
         }
-        Set<PointCut> cuts = selectPointCuts(position);
+        Set<org.windning.pointcut.PointCut> cuts = selectPointCuts(position);
         if(cuts != null) {
-            for(PointCut cut : cuts) {
+            for(org.windning.pointcut.PointCut cut : cuts) {
                 cut.onAfter(self, methodArgs);
             }
         }

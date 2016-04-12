@@ -24,8 +24,8 @@ public class MainActivity extends FragmentActivity {
 ### 3.Register point cuts by implementing *PointCutRegistery*:  
 <pre><code>public class DemoPointCut implements PointCutRegistery {
     @Override
-    public Map<String, PointCut> register() {
-        map.put("demo.windning.view.MainActivity.onCreate.class#0.onClick(View)",
+    public void register(PointCutEntry entry) {
+        entry.add("demo.windning.view.MainActivity.onCreate.class#0.onClick(View)",
         new PointCut(){
             @Override
             public boolean onBefore(Object self, Object[] args) {
@@ -74,8 +74,8 @@ public class Demo {
 
 <pre><code>public class [UserOwnRegistery] implements PointCutRegistery {
     @Override
-    public Map<String, PointCut> register() {
-        map.put([method position], [customized point cut function]);
+    public void register(PointCutEntry entry) {
+        entry.add([method position], [customized point cut function]);
     }
 </code></pre>
 

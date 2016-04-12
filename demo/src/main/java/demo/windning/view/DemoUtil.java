@@ -2,7 +2,7 @@ package demo.windning.view;
 
 import android.app.Activity;
 
-import com.windning.annotation.JoinPoints;
+import org.windning.annotation.JoinPoints;
 
 /**
  * Created by yw_sun on 2016/4/8.

@@ -5,9 +5,10 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.windning.annotation.JoinPoints;
 import com.windning.aspectinj.R;
-import com.windning.pointcut.AspectInjector;
+
+import org.windning.annotation.JoinPoints;
+import org.windning.pointcut.AspectInjector;
 
 import demo.windning.view.pointcut.DemoPointCut;
 

@@ -1,4 +1,4 @@
-package com.windning.pointcut;
+package org.windning.pointcut;
 
 /**
  * Implement #register and call "AspectInjector.weave" to add point cuts.

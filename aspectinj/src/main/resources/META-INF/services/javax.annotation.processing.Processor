@@ -1,1 +1,1 @@
-com.windning.annotation.processor.JoinPointProcessor
+org.windning.annotation.processor.JoinPointProcessor

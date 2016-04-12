@@ -1,4 +1,4 @@
-package com.windning.pointcut;
+package org.windning.pointcut;
 
 /**
  * Override this to add process logic to some join point

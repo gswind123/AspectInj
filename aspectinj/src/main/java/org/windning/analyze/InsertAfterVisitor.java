@@ -1,4 +1,4 @@
-package com.windning.analyze;
+package org.windning.analyze;
 
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
@@ -6,7 +6,7 @@ import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.ListBuffer;
 import com.sun.tools.javac.util.Names;
-import com.windning.analyze.util.AnalyzeUtil;
+import org.windning.analyze.util.AnalyzeUtil;
 
 /**
  * This visitor is used to insert "after" method before each "return" node

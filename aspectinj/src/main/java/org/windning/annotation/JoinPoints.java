@@ -1,4 +1,4 @@
-package com.windning.annotation;
+package org.windning.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

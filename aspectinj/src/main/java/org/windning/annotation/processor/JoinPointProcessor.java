@@ -1,4 +1,4 @@
-package com.windning.annotation.processor;
+package org.windning.annotation.processor;
 
 import com.sun.source.util.Trees;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
@@ -7,8 +7,9 @@ import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.Names;
-import com.windning.analyze.TopClassAnalyzor;
-import com.windning.annotation.JoinPoints;
+
+import org.windning.analyze.TopClassAnalyzor;
+import org.windning.annotation.JoinPoints;
 
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
@@ -52,7 +53,7 @@ public class JoinPointProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new HashSet<String>();
-        set.add("com.windning.annotation.JoinPoints");
+        set.add(JoinPoints.class.getName());
         return set;
     }
 

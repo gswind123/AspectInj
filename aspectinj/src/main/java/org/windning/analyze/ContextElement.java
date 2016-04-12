@@ -1,4 +1,4 @@
-package com.windning.analyze;
+package org.windning.analyze;
 
 import com.sun.tools.javac.tree.JCTree;
 
