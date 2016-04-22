@@ -43,7 +43,7 @@ public class InsertAfterVisitor extends TreeTranslator{
         mLevelIndex++;
         super.visitMethodDef(method);
         mLevelIndex--;
-        if(mLevelIndex == 0) { //target traversed
+        if(mLevelIndex < 0) { //target method traversed
             /**
              * When return type is VOID, there should be an "after"
              * at the end of the method.
@@ -53,6 +53,7 @@ public class InsertAfterVisitor extends TreeTranslator{
                 stats.addAll(method.getBody().stats);
                 stats.add(mTreeMaker.Exec(mInvocation));
                 method.getBody().stats = stats.toList();
+                mInsertCtr++;
             }
         }
     }

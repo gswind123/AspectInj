@@ -18,6 +18,9 @@ import org.windning.analyze.util.AnalyzeUtil;
 
 import java.util.ArrayList;
 
+import javax.annotation.processing.Messager;
+import javax.tools.Diagnostic;
+
 /**
  * Class analyzor of the top level
  */
@@ -25,11 +28,13 @@ public class TopClassAnalyzor extends TreeTranslator {
     private JCClassDecl mRootClass;
     private TreeMaker mTreeMaker;
     private Names mNameTable;
+    private Messager mMessager;
 
-    public TopClassAnalyzor(JCClassDecl rootClass, TreeMaker treeMaker, Names names) {
+    public TopClassAnalyzor(JCClassDecl rootClass, TreeMaker treeMaker, Names names, Messager msg) {
         mRootClass = rootClass;
         mTreeMaker = treeMaker;
         mNameTable = names;
+        mMessager = msg;
     }
 
     private int mAnonyIndex = -1;
@@ -100,6 +105,9 @@ public class TopClassAnalyzor extends TreeTranslator {
             InsertAfterVisitor afterVisitor = new InsertAfterVisitor(mTreeMaker, mNameTable,
                     method, invokeAfter);
             method.accept(afterVisitor);
+            if(afterVisitor.getInsertCount() == 0) {
+                mMessager.printMessage(Diagnostic.Kind.WARNING, AnalyzeUtil.getMethodSignature(mCxtStack, method)+"\t"+"get no after");
+            }
 
         }catch (Exception e){
 

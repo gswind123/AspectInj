@@ -110,7 +110,7 @@ public class AnalyzeUtil {
     /**
      * Generate a method signature
      * NOTE:
-     *  For an anonymous class, its name will be "C#[index]",in which [index] represents
+     *  For an anonymous class, its name will be "class#[index]",in which [index] represents
      *  the declaration order in its upper-level class/method, started from 0.
      * @param contextStack The context stack of the method
      * @param method The declaration node of the target method

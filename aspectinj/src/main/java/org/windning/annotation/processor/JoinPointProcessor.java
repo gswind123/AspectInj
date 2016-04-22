@@ -69,7 +69,7 @@ public class JoinPointProcessor extends AbstractProcessor {
                 if(a != null) {
                     JCTree tree = (JCTree)mTrees.getTree(each);
                     if(tree instanceof JCTree.JCClassDecl) {
-                        TreeTranslator visitor = new TopClassAnalyzor((JCTree.JCClassDecl)tree, mMaker, mNames);
+                        TreeTranslator visitor = new TopClassAnalyzor((JCTree.JCClassDecl)tree, mMaker, mNames, mMessager);
                         tree.accept(visitor);
                     }
                 }
