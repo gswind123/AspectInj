@@ -21,8 +21,8 @@ The *jar* file can be compiled by module *aspectinj*
 public class MainActivity extends FragmentActivity {
 </code></pre>
 
-### 3.Register point cuts by implementing *PointCutRegistery*:  
-<pre><code>public class DemoPointCut implements PointCutRegistery {
+### 3.Register point cuts by implementing *PointCutRegistry*:  
+<pre><code>public class DemoPointCut implements PointCutRegistry {
     @Override
     public void register(PointCutEntry entry) {
         entry.add("demo.windning.view.MainActivity.onCreate.class#0.onClick(View)",
@@ -72,7 +72,7 @@ public class Demo {
 
 ### * How to add *PointCut* around some specific method
 
-<pre><code>public class [UserOwnRegistery] implements PointCutRegistery {
+<pre><code>public class [UserOwnRegistry] implements PointCutRegistry {
     @Override
     public void register(PointCutEntry entry) {
         entry.add([method position], [customized point cut function]);

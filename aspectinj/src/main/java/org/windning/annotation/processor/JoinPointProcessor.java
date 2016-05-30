@@ -27,7 +27,7 @@ import javax.lang.model.element.TypeElement;
 /**
  * Main annotation processor for join points
  */
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class JoinPointProcessor extends AbstractProcessor {
     private ProcessingEnvironment mEnv = null;
     private Trees mTrees;

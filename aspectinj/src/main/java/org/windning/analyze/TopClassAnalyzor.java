@@ -1,6 +1,5 @@
 package org.windning.analyze;
 
-import com.sun.tools.javac.code.TypeTag;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.JCBlock;
 import com.sun.tools.javac.tree.JCTree.JCClassDecl;
@@ -14,7 +13,9 @@ import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.ListBuffer;
 import com.sun.tools.javac.util.Names;
 
+import org.windning.analyze.model.TypeEnum;
 import org.windning.analyze.util.AnalyzeUtil;
+import org.windning.analyze.util.CompatUtil;
 
 import java.util.ArrayList;
 
@@ -127,7 +128,7 @@ public class TopClassAnalyzor extends TreeTranslator {
         //Then,add arguments
         boolean isStatic = AnalyzeUtil.isContextStatic(mCxtStack);
         ListBuffer<JCTree.JCExpression> beforeArgs = new ListBuffer<JCTree.JCExpression>();
-        beforeArgs.append(mTreeMaker.Literal(TypeTag.BOOLEAN, isStatic?1:0));
+        beforeArgs.append(CompatUtil.makeLiteral(mTreeMaker, TypeEnum.BOOLEAN, isStatic?1:0));
         if(!isStatic) {
             beforeArgs.append(
                     AnalyzeUtil.makeAccess(mTreeMaker, mNameTable, mRootClass.getSimpleName().toString(), "this"));
@@ -136,7 +137,8 @@ public class TopClassAnalyzor extends TreeTranslator {
             beforeArgs.append(mTreeMaker.Ident(param.getName()));
         }
         String methodSig = AnalyzeUtil.getMethodSignature(mCxtStack, method);
-        beforeArgs.append(mTreeMaker.Literal(TypeTag.CLASS, methodSig));
+
+        beforeArgs.append(CompatUtil.makeLiteral(mTreeMaker, TypeEnum.CLASS, methodSig));
 
         //Finally,make the invocation
         JCTree.JCMethodInvocation invokeBefore = mTreeMaker.Apply(List.<JCTree.JCExpression>nil(),
@@ -152,7 +154,7 @@ public class TopClassAnalyzor extends TreeTranslator {
         //Then,add arguments
         boolean isStatic = AnalyzeUtil.isContextStatic(mCxtStack);
         ListBuffer<JCTree.JCExpression> afterArgs = new ListBuffer<JCTree.JCExpression>();
-        afterArgs.append(mTreeMaker.Literal(TypeTag.BOOLEAN, isStatic?1:0));
+        afterArgs.append(CompatUtil.makeLiteral(mTreeMaker, TypeEnum.BOOLEAN, isStatic ? 1 : 0));
         if(!isStatic) {
             afterArgs.append(
                     AnalyzeUtil.makeAccess(mTreeMaker, mNameTable, mRootClass.getSimpleName().toString(), "this"));
@@ -161,7 +163,7 @@ public class TopClassAnalyzor extends TreeTranslator {
             afterArgs.append(mTreeMaker.Ident(param.getName()));
         }
         String methodSig = AnalyzeUtil.getMethodSignature(mCxtStack, method);
-        afterArgs.append(mTreeMaker.Literal(TypeTag.CLASS, methodSig));
+        afterArgs.append(CompatUtil.makeLiteral(mTreeMaker, TypeEnum.BOOLEAN, isStatic ? 1 : 0));
 
         //Finally,make the invocation
         JCTree.JCMethodInvocation invokeAfter = mTreeMaker.Apply(List.<JCTree.JCExpression>nil(),

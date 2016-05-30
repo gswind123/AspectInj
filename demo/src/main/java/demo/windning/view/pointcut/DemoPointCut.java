@@ -4,14 +4,14 @@ import android.widget.Toast;
 
 import org.windning.pointcut.PointCut;
 import org.windning.pointcut.PointCutEntry;
-import org.windning.pointcut.PointCutRegistery;
+import org.windning.pointcut.PointCutRegistry;
 
 import demo.windning.view.MainActivity;
 
 /**
  * Created by yw_sun on 2016/4/8.
  */
-public class DemoPointCut implements PointCutRegistery {
+public class DemoPointCut implements PointCutRegistry {
     @Override
     public void register(PointCutEntry entry) {
         entry.add("demo.windning.view.MainActivity.onCreate.class#0.onClick(View)",

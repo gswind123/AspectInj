@@ -2,12 +2,13 @@ package org.windning.analyze.util;
 
 import com.sun.tools.javac.code.Flags;
 import com.sun.tools.javac.code.Symbol;
-import com.sun.tools.javac.code.TypeTag;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Names;
+
 import org.windning.analyze.ContextElement;
+import org.windning.analyze.model.TypeEnum;
 
 import java.util.ArrayList;
 
@@ -166,37 +167,37 @@ public class AnalyzeUtil {
         JCTree.JCExpression expr = null;
         if(returnType instanceof JCTree.JCPrimitiveTypeTree) {
             JCTree.JCPrimitiveTypeTree primeTree = (JCTree.JCPrimitiveTypeTree) returnType;
-            if(primeTree.typetag == TypeTag.VOID) {
+            if(CompatUtil.isPrimeTreeVoid(primeTree)) {
                 return null;
             }
             TypeKind kind = primeTree.getPrimitiveTypeKind();
             if(kind.isPrimitive()) {
-                TypeTag type = null;
+                TypeEnum type = null;
                 switch(kind) {
                 case BOOLEAN:
-                    type = TypeTag.BOOLEAN; break;
+                    type = TypeEnum.BOOLEAN; break;
                 case BYTE:
-                    type = TypeTag.BYTE; break;
+                    type = TypeEnum.BYTE; break;
                 case SHORT:
-                    type = TypeTag.SHORT; break;
+                    type = TypeEnum.SHORT; break;
                 case INT:
-                    type = TypeTag.INT; break;
+                    type = TypeEnum.INT; break;
                 case LONG:
-                    type = TypeTag.LONG; break;
+                    type = TypeEnum.LONG; break;
                 case CHAR:
-                    type = TypeTag.CHAR; break;
+                    type = TypeEnum.CHAR; break;
                 case FLOAT:
-                    type = TypeTag.FLOAT; break;
+                    type = TypeEnum.FLOAT; break;
                 case DOUBLE:
-                    type = TypeTag.DOUBLE; break;
+                    type = TypeEnum.DOUBLE; break;
                 }
                 if(type != null) {
-                    expr = maker.Literal(type, 0);
+                    expr = CompatUtil.makeLiteral(maker, type, 0);
                 }
             }
         }
         if(expr == null) {
-            expr = maker.Literal(TypeTag.BOT, null);
+            expr = CompatUtil.makeLiteral(maker, TypeEnum.BOT, null);
         }
         JCTree.JCReturn retNode = maker.Return(expr);
         return retNode;

@@ -13,7 +13,7 @@ public class AspectInjector {
      * Register point cuts.All user-defined point cuts will not
      * work util this method is invoked.
      */
-    public static void weave(org.windning.pointcut.PointCutRegistery registery) {
+    public static void weave(PointCutRegistry registery) {
         if(registery != null) {
             registery.register(mPointCutEntry);
         }
