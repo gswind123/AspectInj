@@ -163,7 +163,7 @@ public class TopClassAnalyzor extends TreeTranslator {
             afterArgs.append(mTreeMaker.Ident(param.getName()));
         }
         String methodSig = AnalyzeUtil.getMethodSignature(mCxtStack, method);
-        afterArgs.append(CompatUtil.makeLiteral(mTreeMaker, TypeEnum.BOOLEAN, isStatic ? 1 : 0));
+        afterArgs.append(CompatUtil.makeLiteral(mTreeMaker, TypeEnum.CLASS, methodSig));
 
         //Finally,make the invocation
         JCTree.JCMethodInvocation invokeAfter = mTreeMaker.Apply(List.<JCTree.JCExpression>nil(),
